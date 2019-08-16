@@ -10,13 +10,15 @@ module Iyzipay
 
     def http_headers(pki_string = nil, options = nil, authorize_request = true)
       headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
       }
 
       return headers unless authorize_request
 
       random_header_value = random_string(RANDOM_STRING_SIZE)
+
+      headers[RANDOM_HEADER_NAME] = random_header_value
 
       headers[AUTHORIZATION_HEADER_NAME] = prepare_authorization_string(
         pki_string,
@@ -24,13 +26,11 @@ module Iyzipay
         options
       )
 
-      headers[RANDOM_HEADER_NAME] = random_header_value
-
       headers
     end
 
     def plain_http_headers
-      http_headers(nil, false)
+      http_headers(nil, nil, false)
     end
 
     def prepare_authorization_string(pki_string, random_header_value, options)

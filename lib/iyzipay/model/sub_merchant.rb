@@ -6,19 +6,19 @@ module Iyzipay
       def create(request = {}, options)
         pki_string = to_pki_string_create(request)
         HttpClient.post("#{options.base_url}/onboarding/submerchant",
-                        http_headers(pki_string, options).merge(body: request.to_json))
+                        params)
       end
 
       def update(request = {}, options)
         pki_string = to_pki_string_update(request)
         HttpClient.put("#{options.base_url}/onboarding/submerchant",
-                       http_headers(pki_string, options).merge(body: request.to_json))
+                       params)
       end
 
       def retrieve(request = {}, options)
         pki_string = to_pki_string_retrieve(request)
         HttpClient.post("#{options.base_url}/onboarding/submerchant/detail",
-                        http_headers(pki_string, options).merge(body: request.to_json))
+                        params)
       end
 
       def to_pki_string_create(request)

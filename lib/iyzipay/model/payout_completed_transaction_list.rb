@@ -5,8 +5,14 @@ module Iyzipay
     class PayoutCompletedTransactionList < IyzipayResource
       def retrieve(request = {}, options)
         pki_string = to_pki_string(request)
+
+        params = {
+          headers: http_headers(pki_string, options),
+          body: request.to_json
+        }
+
         HttpClient.post("#{options.base_url}/reporting/settlement/payoutcompleted",
-                        http_headers(pki_string, options).merge(body: request.to_json))
+                        params)
       end
 
       def to_pki_string(request)

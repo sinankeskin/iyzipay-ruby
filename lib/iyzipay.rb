@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-# coding: utf-8
+# frozen_string_literal: true
 
 require 'json'
-require 'rest-client'
+require 'httparty'
 require 'base64'
 
 module Iyzipay

@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 module Iyzipay
   class HttpClient
-    def self.get(url, header={})
-      RestClient.get(url, header)
+    def self.get(path, options = {}, &block)
+      HTTParty.get(path, options, &block).to_s
     end
 
-    def self.post(url, header, content)
-      RestClient.post(url, content, header)
+    def self.post(path, options = {}, &block)
+      HTTParty.post(path, options, &block).to_s
     end
 
-    def self.put(url, header, content)
-      RestClient.put(url, content, header)
+    def self.put(path, options = {}, &block)
+      HTTParty.put(path, options, &block).to_s
     end
 
-    def self.delete(url, headers={}, content, &block)
-      RestClient::Request.execute(:method => :delete, :url => url, :payload => content, :headers => headers, &block)
+    def self.delete(path, options = {}, &block)
+      HTTParty.delete(path, options, &block).to_s
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Iyzipay
   class PkiBuilder
     attr_accessor :request_string
@@ -8,39 +10,41 @@ module Iyzipay
 
     def append_super(super_request_string)
       unless super_request_string.nil?
-
         s = super_request_string[1..-2]
-        if s.length > 0
+
+        unless s.empty?
           result = @request_string + s
           result << ','
         end
+
         @request_string = result
       end
+
       self
     end
 
     def append(key, value = nil)
-      unless value.nil?
-        append_key_value(key, value)
-      end
+      append_key_value(key, value) unless value.nil?
+
       self
     end
 
     def append_price(key, value = nil)
-      unless value.nil?
-        append_key_value(key, format_price(value))
-      end
+      append_key_value(key, format_price(value)) unless value.nil?
+
       self
     end
 
     def append_array(key, array = nil)
       unless array.nil?
-        appended_value = ''
+        appended_value = +''
+
         array.each do |value|
           appended_value << value.to_s
           appended_value << ', '
         end
       end
+
       append_key_value_array(key, appended_value)
 
       self
@@ -77,13 +81,12 @@ module Iyzipay
     end
 
     def format_price(price)
-      unless price.include? '.'
-        price = price+'.0'
-      end
+      price += '.0' unless price.include? '.'
       sub_str_index = 0
       price_reversed = price.reverse
-      i=0
-      while i < price.size do
+      i = 0
+
+      while i < price.size
         if price_reversed[i] == '0'
           sub_str_index = i + 1
         elsif price_reversed[i] == '.'
@@ -92,10 +95,10 @@ module Iyzipay
         else
           break
         end
-        i+=1
+        i += 1
       end
+
       (price_reversed[sub_str_index..-1]).reverse
     end
-
   end
 end

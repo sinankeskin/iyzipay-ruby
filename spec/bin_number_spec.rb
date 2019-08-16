@@ -20,6 +20,9 @@ RSpec.describe 'Iyzipay' do
     begin
       #$stderr.puts bin_number.inspect
       bin_number = JSON.parse(bin_number)
+
+      puts bin_number
+
       expect(bin_number['status']).to eq('success')
       expect(bin_number['locale']).to eq('tr')
       expect(bin_number['systemTime']).not_to be_nil

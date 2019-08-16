@@ -10,16 +10,21 @@ module Iyzipay
 
     def http_headers(pki_string = nil, options = nil, authorize_request = true)
       headers = {
-        accept: 'application/json',
-        'content-type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
 
-      if authorize_request
-        random_header_value = random_string(RANDOM_STRING_SIZE)
-        headers[AUTHORIZATION_HEADER_NAME] = prepare_authorization_string(pki_string, random_header_value, options).to_s
-        headers[RANDOM_HEADER_NAME] = random_header_value.to_s
-        headers[:'x-iyzi-client-version'] = 'iyzipay-ruby-1.0.45'
-      end
+      return headers unless authorize_request
+
+      random_header_value = random_string(RANDOM_STRING_SIZE)
+
+      headers[AUTHORIZATION_HEADER_NAME] = prepare_authorization_string(
+        pki_string,
+        random_header_value,
+        options
+      )
+
+      headers[RANDOM_HEADER_NAME] = random_header_value
 
       headers
     end
@@ -30,11 +35,13 @@ module Iyzipay
 
     def prepare_authorization_string(pki_string, random_header_value, options)
       hash_digest = calculate_hash(pki_string, random_header_value, options)
+
       format_header_string(options.api_key, hash_digest)
     end
 
     def json_decode(response, raw_result)
       json_result = JSON.parse(raw_result)
+
       response.from_json(json_result)
     end
 

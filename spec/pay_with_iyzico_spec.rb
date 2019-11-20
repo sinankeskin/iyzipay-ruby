@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'spec_helper'
-require_relative 'builder'
 
 RSpec.describe 'Iyzipay' do
   before :all do
@@ -11,7 +10,7 @@ RSpec.describe 'Iyzipay' do
     @options.base_url = SpecOptions::BASE_URL
   end
 
-  it 'should initialize checkout form for standard merchant' do
+  it 'should initialize pay-with-iyzico link' do
     buyer = {
       id: 'BY789',
       name: 'John',
@@ -74,15 +73,15 @@ RSpec.describe 'Iyzipay' do
       shippingAddress: address,
       basketItems: [item1, item2, item3]
     }
-    checkout_form_initialize = Iyzipay::Model::CheckoutFormInitialize.new.create(request, @options)
+    pay_with_iyzico_initialize = Iyzipay::Model::PayWithIyzicoInitialize.new.create(request, @options)
 
     begin
-      $stdout.puts checkout_form_initialize.inspect
-      expect(checkout_form_initialize['status']).to eq('success')
-      expect(checkout_form_initialize['locale']).to eq('tr')
-      expect(checkout_form_initialize['systemTime']).not_to be_nil
-      expect(checkout_form_initialize['token']).not_to be_nil
-      expect(checkout_form_initialize['checkoutFormContent']).not_to be_nil
+      $stdout.puts pay_with_iyzico_initialize.inspect
+      expect(pay_with_iyzico_initialize['status']).not_to be_nil
+      expect(pay_with_iyzico_initialize['locale']).not_to be_nil
+      expect(pay_with_iyzico_initialize['systemTime']).not_to be_nil
+      expect(pay_with_iyzico_initialize['token']).not_to be_nil
+      expect(pay_with_iyzico_initialize['payWithIyzicoPageUrl']).not_to be_nil
     rescue StandardError
       warn 'oops'
       raise
@@ -91,16 +90,14 @@ RSpec.describe 'Iyzipay' do
 
   it 'should retrieve checkout form result' do
     # This test needs manual on sandbox environment. So it does not contain any assertions.
-    checkout_form_initialize = Builder::CheckoutFormBuilder.new.create_checkout_form_initialize(@options)
-
     request = {
       locale: Iyzipay::Model::Locale::TR,
       conversationId: '123456789',
-      token: checkout_form_initialize['token']
+      token: '408c1036-1f89-41cd-8e87-4c4d8e83501c'
     }
-    checkout_form_payment = Iyzipay::Model::CheckoutForm.new.retrieve(request, @options)
+    pay_with_iyzico_retrieve_result = Iyzipay::Model::PayWithIyzicoRetrieve.new.retrieve(request, @options)
     begin
-      $stdout.puts checkout_form_payment.inspect
+      $stdout.puts pay_with_iyzico_retrieve_result.inspect
     rescue StandardError
       warn 'oops'
       raise

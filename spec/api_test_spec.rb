@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 
@@ -13,12 +13,11 @@ RSpec.describe 'Iyzipay' do
   it 'should test api' do
     api_test = Iyzipay::Model::ApiTest.new.retrieve(@options)
     begin
-      api_test = JSON.parse(api_test)
       expect(api_test['status']).to eq('success')
       expect(api_test['locale']).to eq('tr')
       expect(api_test['systemTime']).not_to be_nil
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

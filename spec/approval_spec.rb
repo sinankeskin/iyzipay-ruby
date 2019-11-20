@@ -24,7 +24,6 @@ RSpec.describe 'Iyzipay' do
       approval = Iyzipay::Model::Approval.new.create(request, @options)
 
       begin
-        approval = JSON.parse(approval)
         expect(approval['status']).to eq('success')
         expect(approval['locale']).to eq('tr')
         expect(approval['systemTime']).not_to be_nil

@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 
@@ -12,15 +12,13 @@ RSpec.describe 'Iyzipay' do
 
   it 'should retrieve bin number' do
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        binNumber: '554960'
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      binNumber: '554960'
     }
     bin_number = Iyzipay::Model::BinNumber.new.retrieve(request, @options)
     begin
-      #$stderr.puts bin_number.inspect
-      bin_number = JSON.parse(bin_number)
-
+      # $stderr.puts bin_number.inspect
       puts bin_number
 
       expect(bin_number['status']).to eq('success')
@@ -34,8 +32,8 @@ RSpec.describe 'Iyzipay' do
       expect(bin_number['bankName']).to eq('Garanti Bankası')
       expect(bin_number['bankCode']).to eq(62)
       expect(bin_number['commercial']).to eq(0)
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

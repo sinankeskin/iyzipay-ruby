@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 require_relative 'builder'
@@ -23,21 +23,20 @@ RSpec.describe 'Iyzipay' do
 
     # disapprove payment
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        paymentTransactionId: payment['itemTransactions'][0]['paymentTransactionId']
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      paymentTransactionId: payment['itemTransactions'][0]['paymentTransactionId']
     }
     disapproval = Iyzipay::Model::Disapproval.new.create(request, @options)
     begin
       $stdout.puts disapproval.inspect
-      disapproval = JSON.parse(disapproval)
       expect(disapproval['status']).to eq('success')
       expect(disapproval['locale']).to eq('tr')
       expect(disapproval['systemTime']).not_to be_nil
       expect(disapproval['conversationId']).to eq('123456789')
       expect(disapproval['paymentTransactionId']).to eq(payment['itemTransactions'][0]['paymentTransactionId'])
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

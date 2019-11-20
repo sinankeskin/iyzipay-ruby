@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 require_relative 'builder'
@@ -13,23 +13,22 @@ RSpec.describe 'Iyzipay' do
 
   it 'should create user and add card' do
     card_information = {
-        cardAlias: 'card alias',
-        cardHolderName: 'John Doe',
-        cardNumber: '5528790000000008',
-        expireYear: '2030',
-        expireMonth: '12'
+      cardAlias: 'card alias',
+      cardHolderName: 'John Doe',
+      cardNumber: '5528790000000008',
+      expireYear: '2030',
+      expireMonth: '12'
     }
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        email: 'email@email.com',
-        externalId: 'external id',
-        card: card_information
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      email: 'email@email.com',
+      externalId: 'external id',
+      card: card_information
     }
     card = Iyzipay::Model::Card.new.create(request, @options)
     begin
       $stdout.puts card.inspect
-      card = JSON.parse(card)
       expect(card['status']).to eq('success')
       expect(card['locale']).to eq('tr')
       expect(card['systemTime']).not_to be_nil
@@ -45,8 +44,8 @@ RSpec.describe 'Iyzipay' do
       expect(card['cardFamily']).to eq('Paraf')
       expect(card['cardBankCode']).to eq(12)
       expect(card['cardBankName']).to eq('Halk Bankası')
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end
@@ -56,23 +55,22 @@ RSpec.describe 'Iyzipay' do
     card = Builder::CardBuilder.new.create_card(@options)
 
     card_information = {
-        cardAlias: 'card alias',
-        cardHolderName: 'John Doe',
-        cardNumber: '5528790000000008',
-        expireYear: '2030',
-        expireMonth: '12'
+      cardAlias: 'card alias',
+      cardHolderName: 'John Doe',
+      cardNumber: '5528790000000008',
+      expireYear: '2030',
+      expireMonth: '12'
     }
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        email: 'email@email.com',
-        cardUserKey: card['cardUserKey'],
-        card: card_information
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      email: 'email@email.com',
+      cardUserKey: card['cardUserKey'],
+      card: card_information
     }
     card = Iyzipay::Model::Card.new.create(request, @options)
     begin
       $stdout.puts card.inspect
-      card = JSON.parse(card)
       expect(card['status']).to eq('success')
       expect(card['locale']).to eq('tr')
       expect(card['systemTime']).not_to be_nil
@@ -87,8 +85,8 @@ RSpec.describe 'Iyzipay' do
       expect(card['cardFamily']).to eq('Paraf')
       expect(card['cardBankCode']).to eq(12)
       expect(card['cardBankName']).to eq('Halk Bankası')
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end
@@ -98,21 +96,20 @@ RSpec.describe 'Iyzipay' do
     card = Builder::CardBuilder.new.create_card(@options)
 
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        cardToken: card['cardToken'],
-        cardUserKey: card['cardUserKey']
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      cardToken: card['cardToken'],
+      cardUserKey: card['cardUserKey']
     }
     card = Iyzipay::Model::Card.new.delete(request, @options)
     begin
       $stdout.puts card.inspect
-      card = JSON.parse(card)
       expect(card['status']).to eq('success')
       expect(card['locale']).to eq('tr')
       expect(card['systemTime']).not_to be_nil
       expect(card['conversationId']).to eq('123456789')
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end
@@ -121,14 +118,13 @@ RSpec.describe 'Iyzipay' do
     card = Builder::CardBuilder.new.create_card(@options)
 
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        cardUserKey: card['cardUserKey']
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      cardUserKey: card['cardUserKey']
     }
     card_list = Iyzipay::Model::CardList.new.retrieve(request, @options)
     begin
       $stdout.puts card_list.inspect
-      card_list = JSON.parse(card_list)
       expect(card_list['status']).to eq('success')
       expect(card_list['locale']).to eq('tr')
       expect(card_list['systemTime']).not_to be_nil
@@ -142,8 +138,8 @@ RSpec.describe 'Iyzipay' do
       expect(card_list['cardDetails'][0]['cardFamily']).to eq('Paraf')
       expect(card_list['cardDetails'][0]['cardBankCode']).to eq(12)
       expect(card_list['cardDetails'][0]['cardBankName']).to eq('Halk Bankası')
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

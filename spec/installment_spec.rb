@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 
@@ -12,13 +12,12 @@ RSpec.describe 'Iyzipay' do
 
   it 'should retrieve installment' do
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        binNumber: '554960',
-        price: '100'
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      binNumber: '554960',
+      price: '100'
     }
     installment_info = Iyzipay::Model::InstallmentInfo.new.retrieve(request, @options)
-    installment_info = JSON.parse(installment_info)
     expect(installment_info['status']).to eq('success')
     expect(installment_info['locale']).to eq('tr')
     expect(installment_info['systemTime']).not_to be_nil
@@ -35,8 +34,8 @@ RSpec.describe 'Iyzipay' do
     expect(installment_info['installmentDetails'][0]['installmentPrices'][0]['installmentNumber']).not_to be_nil
     begin
       $stdout.puts installment_info.inspect
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

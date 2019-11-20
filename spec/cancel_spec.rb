@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 
 require_relative 'spec_helper'
 require_relative 'builder'
@@ -15,15 +15,14 @@ RSpec.describe 'Iyzipay' do
     payment = Builder::PaymentBuilder.new.create_standard_listing_payment(@options)
 
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        paymentId: payment['paymentId'],
-        ip: '85.34.78.112'
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      paymentId: payment['paymentId'],
+      ip: '85.34.78.112'
     }
     cancel = Iyzipay::Model::Cancel.new.create(request, @options)
     begin
       $stdout.puts cancel.inspect
-      cancel = JSON.parse(cancel)
       expect(cancel['status']).to eq('success')
       expect(cancel['locale']).to eq('tr')
       expect(cancel['systemTime']).not_to be_nil
@@ -32,8 +31,8 @@ RSpec.describe 'Iyzipay' do
       expect(cancel['price']).to eq(1.10000000)
       expect(cancel['currency']).to eq('TRY')
       expect(cancel['authCode']).not_to be_nil
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end
@@ -42,17 +41,16 @@ RSpec.describe 'Iyzipay' do
     payment = Builder::PaymentBuilder.new.create_standard_listing_payment(@options)
 
     request = {
-        locale: Iyzipay::Model::Locale::TR,
-        conversationId: '123456789',
-        paymentId: payment['paymentId'],
-        ip: '85.34.78.112',
-        reason: Iyzipay::Model::RefundReason::OTHER,
-        description: 'customer requested for default sample'
+      locale: Iyzipay::Model::Locale::TR,
+      conversationId: '123456789',
+      paymentId: payment['paymentId'],
+      ip: '85.34.78.112',
+      reason: Iyzipay::Model::RefundReason::OTHER,
+      description: 'customer requested for default sample'
     }
     cancel = Iyzipay::Model::Cancel.new.create(request, @options)
     begin
       $stdout.puts cancel.inspect
-      cancel = JSON.parse(cancel)
       expect(cancel['status']).to eq('success')
       expect(cancel['locale']).to eq('tr')
       expect(cancel['systemTime']).not_to be_nil
@@ -61,8 +59,8 @@ RSpec.describe 'Iyzipay' do
       expect(cancel['price']).to eq(1.10000000)
       expect(cancel['currency']).to eq('TRY')
       expect(cancel['authCode']).not_to be_nil
-    rescue
-      $stderr.puts 'oops'
+    rescue StandardError
+      warn 'oops'
       raise
     end
   end

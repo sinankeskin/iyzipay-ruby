@@ -82,8 +82,8 @@ module Builder
         shippingAddress: address,
         basketItems: [item1, item2, item3]
       }
-      payment = Iyzipay::Model::Payment.new.create(request, options)
-      JSON.parse(payment)
+
+      Iyzipay::Model::Payment.new.create(request, options)
     end
 
     def create_standard_listing_payment(options)
@@ -158,8 +158,8 @@ module Builder
         shippingAddress: address,
         basketItems: [item1, item2, item3]
       }
-      payment = Iyzipay::Model::Payment.new.create(request, options)
-      JSON.parse(payment)
+
+      Iyzipay::Model::Payment.new.create(request, options)
     end
   end
 end

@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.homepage              = 'http://rubygems.org/gems/iyzipay'
   s.license               = 'MIT'
 
-  s.add_runtime_dependency 'httparty', '~> 0.17.0'
+  s.add_runtime_dependency 'httparty', '~> 0.18.0'
   s.add_runtime_dependency 'rack', '~> 2.0', '>= 2.0.7'
   s.add_development_dependency 'nokogiri', '~> 1.10', '>= 1.10.4'
   s.add_development_dependency 'rspec', '~>3.5.0'

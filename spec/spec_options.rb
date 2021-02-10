@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SpecOptions
   API_KEY = 'sandbox-afXhZPW0MQlE4dCUUlHcEopnMBgXnAZI'
   SECRET_KEY = 'sandbox-wbwpzKIiplZxI3hh5ALI4FJyAcZKL6kq'

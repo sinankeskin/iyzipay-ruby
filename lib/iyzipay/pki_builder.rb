@@ -87,10 +87,11 @@ module Iyzipay
       i = 0
 
       while i < price.size
-        if price_reversed[i] == '0'
+        case price_reversed[i]
+        when '0'
           sub_str_index = i + 1
-        elsif price_reversed[i] == '.'
-          price_reversed = '0' + price_reversed
+        when '.'
+          price_reversed = "0#{price_reversed}"
           break
         else
           break

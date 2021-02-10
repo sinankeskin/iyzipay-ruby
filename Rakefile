@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 task default: %w[test]
 
 task :test do
-  puts "@TODO"
+  puts '@TODO'
 end

@@ -74,9 +74,7 @@ RSpec.describe 'Iyzipay' do
     bkm_initialize = Iyzipay::Model::BkmInitialize.new.create(request, @options)
 
     begin
-      unless bkm_initialize['htmlContent'].nil?
-        expect(Base64.decode64(bkm_initialize['htmlContent'])).not_to be_nil
-      end
+      expect(Base64.decode64(bkm_initialize['htmlContent'])).not_to be_nil unless bkm_initialize['htmlContent'].nil?
     rescue StandardError
       warn 'oops'
       raise

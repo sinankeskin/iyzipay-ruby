@@ -21,6 +21,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rack', '~> 2.0', '>= 2.0.7'
   s.add_development_dependency 'nokogiri', '~> 1.10', '>= 1.10.4'
   s.add_development_dependency 'rspec', '~>3.10.0'
-  s.add_development_dependency 'rspec-rails', '~>4.0.2'
+  s.add_development_dependency 'rspec-rails', '~>5.0.0'
   s.require_paths = ['lib']
 end
